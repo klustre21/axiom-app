@@ -1,0 +1,33 @@
+# Axiom
+
+> Axiom is an iPhone app that turns any math, physics or programming question into an interactive lesson you learn by doing: drag it, predict it, run it. Made by AGL Labs LLC (St. Petersburg, Florida). Coming soon to the App Store.
+
+## What it does
+- Ask any question; in about a minute Axiom builds a 15–18 page lesson: an intuition, worked examples, pages you try yourself, and mastery checks.
+- Every page asks you to act. You predict first, then run the simulation or the code and see whether you were right.
+- Interactive pieces include physics simulations (a particle collider, launchers, vibrating strings), draggable graphs and matrices, and a Code Lab that runs Python line by line with variables and the call stack.
+- 60+ hand-written Axiom Originals in math, physics and programming open instantly, work offline and never use a credit.
+
+## Who it is for
+- High school and college STEM students (ages 13+), self-learners and career changers, parents of teens.
+- It is for understanding, not for copying homework answers. There is no photo solver.
+
+## Pricing (US)
+- 3-day free trial with 3 custom lessons and every Original.
+- Starter $9.99/month (10 custom lessons), Plus $19.99/month (25), Pro $39.99/month (55). Credit packs of 3, 8 or 20 lessons.
+
+## Positioning
+- One line: "Ask anything. Get a lesson you can play with."
+- Versus chatbots and study modes: they explain; Axiom makes you do it.
+- Versus course apps: Axiom builds the lesson for your exact question.
+- Tone: curious, plain, confident; never "cheat", "skip the work" or "for kids".
+
+## Rules for marketing content
+- AI presenters may present the app but must never pose as real users or students.
+- Paid or gifted content must disclose it out loud and on screen.
+
+## Links
+- Website: https://klustre21.github.io/axiom-app/
+- Press & creator kit (facts, footage, brand): https://klustre21.github.io/axiom-app/press.html
+- Privacy: https://axiom-backend-agl.fly.dev/api/legal/privacy
+- Contact: contact@agl-labs.com

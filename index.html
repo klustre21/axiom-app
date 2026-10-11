@@ -16,11 +16,19 @@
 <link rel="icon" href="img/icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Fraunces:opsz,wght@9..144,800&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<meta name="twitter:title" content="Axiom: ask anything, learn it by doing">
+<meta name="twitter:description" content="Any question becomes an interactive lesson you can touch, drag and run. Math, physics and programming on iPhone.">
+<meta name="twitter:image" content="https://klustre21.github.io/axiom-app/img/og.jpg">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"MobileApplication","name":"Axiom: AI Tutor & Lessons","operatingSystem":"iOS","applicationCategory":"EducationalApplication",
- "description":"Ask any question and get an interactive lesson built for you: simulations, drag-and-predict pages, code you step through, and mastery checks. Includes 60+ ready-made lessons in math, physics and programming.",
- "offers":{"@type":"Offer","price":"9.99","priceCurrency":"USD","description":"Monthly subscription after a 3-day free trial"},
- "publisher":{"@type":"Organization","name":"AGL Labs LLC","url":"https://agl-labs.com"}}
+{"@context":"https://schema.org","@type":"MobileApplication","name":"Axiom: AI Tutor & Lessons","alternateName":"Axiom","operatingSystem":"iOS","applicationCategory":"EducationalApplication","inLanguage":"en","contentRating":"13+","availableOnDevice":"iPhone",
+ "description":"Ask any math, physics or programming question and Axiom builds an interactive lesson for it in about a minute: simulations you run, graphs and matrices you drag, code you predict and then watch execute, and mastery checks. Includes 60+ ready-made Axiom Originals that never use a credit.",
+ "featureList":["AI-built interactive lessons from any question, in about a minute","Predict first, then run it and see whether you were right","Physics simulations, including a particle collider, launchers and vibrating strings","Drag-the-plane linear algebra","Code Lab: watch Python run line by line, with the call stack and variables","60+ hand-written Axiom Originals that work offline and never use a credit","Mastery checks and spaced review"],
+ "audience":{"@type":"Audience","audienceType":"High school and college STEM students, self-learners, parents of teens"},
+ "screenshot":["https://klustre21.github.io/axiom-app/media/axiom-tour-poster.jpg","https://klustre21.github.io/axiom-app/media/predict-then-run.jpg","https://klustre21.github.io/axiom-app/media/launch-the-shell.jpg"],
+ "offers":[{"@type":"Offer","name":"Starter","price":"9.99","priceCurrency":"USD","description":"10 custom lessons a month, after a 3-day free trial"},
+           {"@type":"Offer","name":"Plus","price":"19.99","priceCurrency":"USD","description":"25 custom lessons a month, after a 3-day free trial"},
+           {"@type":"Offer","name":"Pro","price":"39.99","priceCurrency":"USD","description":"55 custom lessons a month, after a 3-day free trial"}],
+ "publisher":{"@type":"Organization","name":"AGL Labs LLC","url":"https://agl-labs.com","email":"contact@agl-labs.com"}}
 </script>
 <style>
   :root{--paper:#FFF8ED;--paper2:#F6EEE2;--ink:#302D38;--muted:#6A6472;--blue:#334BDC;--coral:#F4AC8C;--saffron:#F4D66A;--lilac:#D6C8F0;--green:#12815A;--line:rgba(48,45,56,.14);color-scheme:light}
@@ -53,7 +61,7 @@
   .hero{padding:72px 0 88px;overflow:hidden}
   .hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
   .hero .ctas{display:flex;gap:14px;flex-wrap:wrap;margin-top:32px}
-  .phone{position:relative;width:min(340px,80vw);aspect-ratio:9/16;margin:0 auto;border-radius:44px;background:#15141A;padding:10px;box-shadow:0 40px 90px rgba(48,45,56,.28);transform:rotate(3deg)}
+  .phone{position:relative;width:min(320px,74vw);aspect-ratio:1206/2622;margin:0 auto;border-radius:44px;background:#15141A;padding:10px;box-shadow:0 40px 90px rgba(48,45,56,.28);transform:rotate(3deg)}
   .phone video{width:100%;height:100%;object-fit:cover;border-radius:34px;background:var(--blue)}
   .blob{position:absolute;border-radius:50%;z-index:-1}
   .hero-art{position:relative;isolation:isolate}
@@ -73,7 +81,7 @@
   .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px}
   .card{border-radius:28px;padding:22px 22px 26px;position:relative;overflow:hidden}
   .card .screen{border-radius:18px;overflow:hidden;background:#fff;aspect-ratio:3/4;margin-bottom:20px;box-shadow:0 12px 30px rgba(48,45,56,.16)}
-  .card .screen video{width:100%;height:100%;object-fit:cover;object-position:center 55%}
+  .card .screen video{width:100%;height:100%;object-fit:cover;object-position:center 35%}
   .card p{margin:8px 0 0;color:#3E3A46}
   .c-saffron{background:var(--saffron)} .c-coral{background:var(--coral)} .c-lilac{background:var(--lilac)} .c-blue{background:var(--blue);color:var(--paper)} .c-blue p{color:rgba(255,248,237,.86)} .c-ink{background:var(--ink);color:var(--paper)} .c-ink p{color:rgba(255,248,237,.8)} .c-green{background:#CFE6DA}
   .tag{display:inline-block;font:700 13px/1 'Source Sans 3';letter-spacing:.1em;text-transform:uppercase;padding:7px 11px;border-radius:999px;background:rgba(255,255,255,.55);margin-bottom:12px;color:var(--ink)}
@@ -150,7 +158,7 @@
   </div>
   <div class="hero-art">
     <div class="blob b1"></div><div class="blob b2"></div>
-    <div class="phone"><video src="media/axiom-tour.mp4" poster="media/axiom-tour-poster.jpg" autoplay muted loop playsinline aria-label="26-second tour of the Axiom app"></video></div>
+    <div class="phone"><video src="media/axiom-tour.mp4" poster="media/axiom-tour-poster.jpg" autoplay muted loop playsinline aria-label="24-second tour of the Axiom app: open a deep dive, fire a probe, then watch recursion run"></video></div>
   </div>
 </div></header>
 
@@ -170,12 +178,12 @@
   <h2>Not a video. Not a paragraph.<br>Something you can touch.</h2>
   <p class="lede" style="margin-top:18px">These are real screens from the app.</p>
   <div class="grid">
-    <div class="card c-saffron"><div class="screen"><video src="media/predict-then-run.mp4" poster="media/predict-then-run.jpg" autoplay muted loop playsinline></video></div><span class="tag">Programming</span><h3>Predict, then run it</h3><p>Commit to an answer, then watch the program actually run: inserts, buckets, and every comparison it makes.</p></div>
-    <div class="card c-blue"><div class="screen"><video src="media/drag-the-matrix.mp4" poster="media/drag-the-matrix.jpg" autoplay muted loop playsinline></video></div><span class="tag">Math</span><h3>Grab the plane</h3><p>Drag î and ĵ and watch the whole grid follow. Linear algebra you can feel with your fingers.</p></div>
+    <div class="card c-saffron"><div class="screen"><video src="media/predict-then-run.mp4" poster="media/predict-then-run.jpg" autoplay muted loop playsinline></video></div><span class="tag">Code Lab</span><h3>Predict, then run it</h3><p>Commit to an answer, then watch the program actually run: the jump to the right bucket, and every key it checks on the way.</p></div>
+    <div class="card c-blue"><div class="screen"><video src="media/drag-the-matrix.mp4" poster="media/drag-the-matrix.jpg" autoplay muted loop playsinline></video></div><span class="tag">Math</span><h3>Grab the plane</h3><p>Drag î and ĵ and the whole grid follows. Lean the F onto its outline and feel what a shear is.</p></div>
     <div class="card c-coral"><div class="screen"><video src="media/launch-the-shell.mp4" poster="media/launch-the-shell.jpg" autoplay muted loop playsinline></video></div><span class="tag">Physics</span><h3>Fire the launcher</h3><p>Two angles land on the same spot. Find out why by trying them, not by memorizing it.</p></div>
-    <div class="card c-ink"><div class="screen"><video src="media/step-through-code.mp4" poster="media/step-through-code.jpg" autoplay muted loop playsinline></video></div><span class="tag">Programming</span><h3>Step through code</h3><p>Run a loop one line at a time, watch the variables change, and call the next value before it happens.</p></div>
+    <div class="card c-ink"><div class="screen"><video src="media/step-through-code.mp4" poster="media/step-through-code.jpg" autoplay muted loop playsinline></video></div><span class="tag">Code Lab</span><h3>Step through code</h3><p>Predict what a loop prints, then watch it run pass by pass: the counter, the running total, and the test that finally stops it.</p></div>
     <div class="card c-lilac"><div class="screen"><video src="media/tune-the-string.mp4" poster="media/tune-the-string.jpg" autoplay muted loop playsinline></video></div><span class="tag">Physics</span><h3>Tune the string</h3><p>Pick the wavelength that fits the third harmonic and count the still points on a vibrating string.</p></div>
-    <div class="card c-green"><div class="screen" style="aspect-ratio:1/1"><video src="media/particle-collider.mp4" poster="media/particle-collider.jpg" autoplay muted loop playsinline></video></div><span class="tag">Physics sim</span><h3>Run a particle collider</h3><p>Ask about the Large Hadron Collider and you get a collider: beams, bunches and collisions at ATLAS, CMS, ALICE and LHCb.</p></div>
+    <div class="card c-green"><div class="screen" style="aspect-ratio:1/1"><video src="media/particle-collider.mp4" poster="media/particle-collider.jpg" autoplay muted loop playsinline></video></div><span class="tag">Physics sim</span><h3>Run a particle collider</h3><p>Ask about the Large Hadron Collider and you get one: two beams of bunches circling the ring, colliding at ATLAS, CMS, ALICE and LHCb.</p></div>
   </div>
 </div></section>
 
@@ -223,7 +231,7 @@
     <div class="plan best"><span class="badge">RECOMMENDED</span><h3>Plus</h3><div class="price">$19.99<small>/mo</small></div><p>25 custom lessons a month</p></div>
     <div class="plan"><h3>Pro</h3><div class="price">$39.99<small>/mo</small></div><p>55 custom lessons a month</p></div>
   </div>
-  <p class="fine">US prices; your local App Store shows prices in your currency. Subscriptions renew monthly until cancelled in your Apple ID settings. Extra credit packs (3, 8 or 20 lessons) are available in the app.</p>
+  <p class="fine">The 3-day free trial includes 3 custom lessons and all 60+ Originals; the app shows the exact time to cancel by, and if you cancel before then you pay nothing. US prices; your local App Store shows prices in your currency. Subscriptions renew monthly until cancelled in your Apple ID settings. Extra credit packs (3, 8 or 20 lessons) are available in the app.</p>
 </div></section>
 
 <section class="band" id="faq"><div class="wrap">
@@ -235,7 +243,9 @@
   <details><summary>How accurate is it?</summary><p>Every generated lesson passes automated checks before it's shown: quiz answers are re-checked, arithmetic in worked examples is evaluated, and physics simulations run on real equations. The 60+ Originals are prepared in advance and pass the same checks.</p></details>
   <details><summary>Does it work offline?</summary><p>The Originals work fully offline. Building a new custom lesson needs a connection.</p></details>
   <details><summary>Is there tracking or ads?</summary><p>No ads and no cross-app tracking. Custom lessons are written by a third-party AI model (xAI), called from our servers. See the <a href="https://axiom-backend-agl.fly.dev/api/legal/privacy">privacy policy</a>.</p></details>
-  <details><summary>Which devices?</summary><p>iPhone, on the App Store.</p></details>
+  <details><summary>Who is Axiom for?</summary><p>Anyone 13 or older who wants math, physics or programming to finally make sense: high school and college students, self-learners and career changers, and parents of teens. Axiom is for understanding, not for copying homework answers.</p></details>
+  <details><summary>What's free?</summary><p>The 3-day free trial: 3 custom lessons of your own and every Axiom Original. Cancel before it ends and you aren't charged.</p></details>
+  <details><summary>Which devices and countries?</summary><p>iPhone, on the App Store, in the US and more than 140 other countries. Axiom isn't available in the EU, the UK or mainland China yet.</p></details>
 </div></section>
 
 <section class="final" id="get"><div class="wrap">
@@ -246,7 +256,7 @@
 
 <footer><div class="wrap">
   <span>© 2026 AGL Labs LLC · St. Petersburg, FL</span>
-  <span><a href="https://axiom-backend-agl.fly.dev/api/legal/privacy">Privacy</a> · <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">Terms (Apple EULA)</a> · <a href="mailto:contact@agl-labs.com">contact@agl-labs.com</a></span>
+  <span><a href="press.html">Press &amp; creators</a> · <a href="https://axiom-backend-agl.fly.dev/api/legal/privacy">Privacy</a> · <a href="https://axiom-backend-agl.fly.dev/api/legal/terms">Terms</a> · <a href="mailto:contact@agl-labs.com">contact@agl-labs.com</a></span>
 </div></footer>
 
 </body>
