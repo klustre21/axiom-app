@@ -25,9 +25,11 @@
  "featureList":["AI-built interactive lessons from any question, in about a minute","Predict first, then run it and see whether you were right","Physics simulations, including a particle collider, launchers and vibrating strings","Drag-the-plane linear algebra","Code Lab: watch Python run line by line, with the call stack and variables","60+ hand-written Axiom Originals that work offline and never use a credit","Mastery checks and spaced review"],
  "audience":{"@type":"Audience","audienceType":"High school and college STEM students, self-learners, parents of teens"},
  "screenshot":["https://klustre21.github.io/axiom-app/media/axiom-tour-poster.jpg","https://klustre21.github.io/axiom-app/media/predict-then-run.jpg","https://klustre21.github.io/axiom-app/media/launch-the-shell.jpg"],
- "offers":[{"@type":"Offer","name":"Starter","price":"9.99","priceCurrency":"USD","description":"10 custom lessons a month, after a 3-day free trial"},
-           {"@type":"Offer","name":"Plus","price":"19.99","priceCurrency":"USD","description":"25 custom lessons a month, after a 3-day free trial"},
-           {"@type":"Offer","name":"Pro","price":"39.99","priceCurrency":"USD","description":"55 custom lessons a month, after a 3-day free trial"}],
+ "offers":[{"@type":"Offer","name":"Starter","price":"9.99","priceCurrency":"USD","description":"10 custom lessons a month, billed monthly, after a 7-day free trial"},
+           {"@type":"Offer","name":"Starter (yearly)","price":"69.99","priceCurrency":"USD","description":"10 custom lessons a month, billed yearly, after a 7-day free trial"},
+           {"@type":"Offer","name":"Plus","price":"19.99","priceCurrency":"USD","description":"25 custom lessons a month, billed monthly, after a 7-day free trial"},
+           {"@type":"Offer","name":"Plus (yearly)","price":"139.99","priceCurrency":"USD","description":"25 custom lessons a month, billed yearly, after a 7-day free trial"},
+           {"@type":"Offer","name":"Pro","price":"39.99","priceCurrency":"USD","description":"55 custom lessons a month, billed monthly, after a 7-day free trial"}],
  "publisher":{"@type":"Organization","name":"AGL Labs LLC","url":"https://agl-labs.com","email":"contact@agl-labs.com"}}
 </script>
 <style>
@@ -106,6 +108,7 @@
   .plan .price{font:800 46px/1 'Bricolage Grotesque';letter-spacing:-.03em;margin:14px 0 4px}
   .plan .price small{font-size:18px;font-weight:700;letter-spacing:0}
   .plan p{margin:6px 0 0;color:inherit;opacity:.8}
+  .plan p.yearly{margin-top:14px;padding-top:12px;border-top:1px solid currentColor;border-color:rgba(127,127,127,.25);font-weight:600;opacity:.9}
   .fine{margin-top:22px;color:var(--muted);font-size:15px;max-width:52em}
 
   details{border-top:1px solid var(--line);padding:22px 0}
@@ -141,7 +144,7 @@
 <nav><div class="wrap">
   <a class="logo" href="#top" aria-label="Axiom home">axiom</a>
   <div class="links">
-    <a href="#how">How it works</a><a href="#lessons">Lessons</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a>
+    <a href="#how">How it works</a><a href="#lessons">Lessons</a><a href="predict/">Try it</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a>
     <a class="btn btn-primary btn-sm" href="#get">Get the app</a>
   </div>
 </div></nav>
@@ -153,9 +156,9 @@
     <p class="lede" style="margin-top:24px">Axiom turns any question into an interactive lesson built just for you. You drag it, predict it and run it until it clicks, instead of reading a wall of text or sitting through another video.</p>
     <div class="ctas">
       <a class="btn btn-primary" href="#get">Coming soon to the App Store</a>
-      <a class="btn btn-ghost" href="#lessons">See a lesson</a>
+      <a class="btn btn-ghost" href="predict/">Try one in your browser</a>
     </div>
-    <p class="soon">3-day free trial · Coming to the App Store</p>
+    <p class="soon">7-day free trial · Coming to the App Store</p>
   </div>
   <div class="hero-art">
     <div class="blob b1"></div><div class="blob b2"></div>
@@ -225,14 +228,14 @@
 
 <section id="pricing"><div class="wrap">
   <p class="kicker">Pricing</p>
-  <h2>Start with a 3-day free trial.</h2>
+  <h2>Start with a 7-day free trial.</h2>
   <p class="lede" style="margin-top:18px">Each plan includes monthly lesson credits for your own questions. One credit builds one custom lesson. The 60+ Originals are included and never use credits.</p>
   <div class="plans">
-    <div class="plan"><h3>Starter</h3><div class="price">$9.99<small>/mo</small></div><p>10 custom lessons a month</p></div>
-    <div class="plan best"><span class="badge">RECOMMENDED</span><h3>Plus</h3><div class="price">$19.99<small>/mo</small></div><p>25 custom lessons a month</p></div>
-    <div class="plan"><h3>Pro</h3><div class="price">$39.99<small>/mo</small></div><p>55 custom lessons a month</p></div>
+    <div class="plan"><h3>Starter</h3><div class="price">$9.99<small>/mo</small></div><p>10 custom lessons a month</p><p class="yearly">or $69.99 a year, about $5.83 a month</p></div>
+    <div class="plan best"><span class="badge">RECOMMENDED</span><h3>Plus</h3><div class="price">$19.99<small>/mo</small></div><p>25 custom lessons a month</p><p class="yearly">or $139.99 a year, about $11.67 a month</p></div>
+    <div class="plan"><h3>Pro</h3><div class="price">$39.99<small>/mo</small></div><p>55 custom lessons a month</p><p class="yearly">monthly only</p></div>
   </div>
-  <p class="fine">The 3-day free trial includes 3 custom lessons and all 60+ Originals; the app shows the exact time to cancel by, and if you cancel before then you pay nothing. US prices; your local App Store shows prices in your currency. Subscriptions renew monthly until cancelled in your Apple ID settings. Extra credit packs (3, 8 or 20 lessons) are available in the app.</p>
+  <p class="fine">The 7-day free trial includes 3 custom lessons and all 60+ Originals; the app shows the exact time to cancel by, and if you cancel before then you pay nothing. Yearly plans save 41% and still refill your lessons every month. US prices; your local App Store shows prices in your currency. Subscriptions renew monthly or yearly, as chosen, until cancelled in your Apple ID settings. Extra credit packs (3, 8 or 20 lessons) are available in the app.</p>
 </div></section>
 
 <section class="band" id="faq"><div class="wrap">
@@ -245,7 +248,7 @@
   <details><summary>Does it work offline?</summary><p>The Originals work fully offline. Building a new custom lesson needs a connection.</p></details>
   <details><summary>Is there tracking or ads?</summary><p>No ads and no cross-app tracking. Custom lessons are written by a third-party AI model (xAI), called from our servers. See the <a href="https://axiom-backend-agl.fly.dev/api/legal/privacy">privacy policy</a>.</p></details>
   <details><summary>Who is Axiom for?</summary><p>Anyone 13 or older who wants math, physics or programming to finally make sense: high school and college students, self-learners and career changers, and parents of teens. Axiom is for understanding, not for copying homework answers.</p></details>
-  <details><summary>What's free?</summary><p>The 3-day free trial: 3 custom lessons of your own and every Axiom Original. Cancel before it ends and you aren't charged.</p></details>
+  <details><summary>What's free?</summary><p>The 7-day free trial: 3 custom lessons of your own and every Axiom Original. Cancel before it ends and you aren't charged.</p></details>
   <details><summary>Which devices and countries?</summary><p>iPhone, on the App Store, in the US and more than 140 other countries. Axiom isn't available in the EU, the UK or mainland China yet.</p></details>
 </div></section>
 

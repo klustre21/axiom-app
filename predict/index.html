@@ -1,0 +1,602 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Predict where it lands · Axiom</title>
+<meta name="description" content="A free physics mini-game from Axiom. A launcher fires a ball at 30 m/s: predict where it lands, then fire and see if you were right. Five rounds, no signup.">
+<meta name="theme-color" content="#FFF8ED">
+<link rel="canonical" href="https://klustre21.github.io/axiom-app/predict/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Predict where it lands">
+<meta property="og:description" content="Pick the angle, call where the ball lands, then fire. A free 2-minute physics game from Axiom. Can you get 5/5?">
+<meta property="og:url" content="https://klustre21.github.io/axiom-app/predict/">
+<meta property="og:image" content="https://klustre21.github.io/axiom-app/img/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Predict where it lands">
+<meta name="twitter:description" content="Pick the angle, call where the ball lands, then fire. A free 2-minute physics game from Axiom. Can you get 5/5?">
+<meta name="twitter:image" content="https://klustre21.github.io/axiom-app/img/og.jpg">
+<link rel="icon" href="../img/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Fraunces:opsz,wght@9..144,800&family=IBM+Plex+Mono:wght@500;600&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#FFF8ED;--paper2:#F6EEE2;--ink:#302D38;--muted:#6A6472;--blue:#334BDC;--coral:#F4AC8C;--saffron:#F4D66A;--lilac:#D6C8F0;--green:#12815A;--line:rgba(48,45,56,.14);--mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;color-scheme:light}
+  *{box-sizing:border-box}
+  [hidden]{display:none!important}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font:400 18px/1.5 'Source Sans 3',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:var(--blue)}
+  button{font:inherit;color:inherit}
+  :focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 16px}
+  h1,h2,h3{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;letter-spacing:-.03em;line-height:1.04;margin:0}
+
+  .top{border-bottom:1px solid var(--line)}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+  .logo{font:800 30px/1 'Fraunces',serif;color:var(--blue);letter-spacing:-.04em;text-decoration:none}
+  .top .home{font-weight:600;font-size:16px;color:var(--ink);text-decoration:none}
+  .top .home:hover{text-decoration:underline}
+
+  .kicker{font:600 13px/1.2 'Source Sans 3';letter-spacing:.14em;text-transform:uppercase;color:var(--blue);margin:0 0 10px}
+  .intro{padding:22px 0 4px}
+  .intro h1{font-size:clamp(36px,8.6vw,60px)}
+  .intro .lede{font-size:18px;color:#4A4552;margin:10px 0 0;max-width:30em}
+
+  .game{display:flex;flex-direction:column;gap:14px;padding-bottom:40px}
+  .bar{display:flex;align-items:center;gap:12px;margin-top:10px}
+  .bar .round{font:700 14px/1 'Source Sans 3';letter-spacing:.1em;text-transform:uppercase}
+  .dots{display:flex;gap:6px;list-style:none;margin:0;padding:0}
+  .dots li{width:12px;height:12px;border-radius:50%;box-shadow:inset 0 0 0 2px var(--ink);background:transparent}
+  .dots li.now{background:var(--ink)}
+  .dots li.ok{background:var(--green);box-shadow:none}
+  .dots li.miss{background:var(--coral);box-shadow:inset 0 0 0 2px var(--ink)}
+  .bar .score{margin-left:auto;font:600 14px/1 var(--mono);padding:7px 12px;border-radius:999px;background:#fff;box-shadow:inset 0 0 0 2px var(--ink)}
+  .prompt{font-size:clamp(22px,5.4vw,28px);font-weight:700;letter-spacing:-.02em;line-height:1.18;outline:none}
+
+  .view{display:flex;flex-direction:column;align-items:center;gap:12px}
+  .stage{width:100%;border-radius:18px;box-shadow:0 0 0 2px var(--ink);overflow:hidden;background:#EEF0FB}
+  .stage svg{display:block;width:100%;height:auto}
+  .scene .grid{stroke:rgba(48,45,56,.13);stroke-width:1;stroke-dasharray:3 5}
+  .scene .ax{font-family:var(--mono);font-size:11px;font-weight:500;fill:var(--muted)}
+  .scene .pill-t{font-family:var(--mono);font-size:12px;font-weight:600;fill:var(--ink)}
+  .scene .ghost{fill:none;stroke:#8C78C9;stroke-width:2.5;stroke-dasharray:4 6;stroke-linecap:round}
+  .scene .trail{fill:none;stroke:var(--blue);stroke-width:3;stroke-dasharray:7 7;stroke-linecap:round}
+  .barrel{transition:transform .45s cubic-bezier(.3,.8,.3,1)}
+  .readout{font:600 15px/1.2 var(--mono);padding:9px 16px;border-radius:999px;background:#fff;box-shadow:inset 0 0 0 2px var(--ink);margin:0;text-align:center;max-width:100%;font-variant-numeric:tabular-nums}
+
+  .controls{display:flex;flex-direction:column;gap:12px}
+  .label{font:700 13px/1 'Source Sans 3';letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0}
+  .chips{display:flex;gap:8px}
+  .chip{flex:1 1 0;min-width:0;height:52px;border:0;border-radius:999px;background:#FFFDF8;box-shadow:inset 0 0 0 2px var(--ink);font:600 18px/1 var(--mono);cursor:pointer;padding:0 4px}
+  .chip.word{font:700 17px/1.05 'Source Sans 3'}
+  .chip:hover{background:#ECE6F8}
+  .chip[aria-pressed="true"]{background:var(--blue);color:#fff}
+  .chip:disabled{cursor:default}
+  .chip:disabled:not([aria-pressed="true"]){opacity:.45;background:#FFFDF8}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border-radius:999px;padding:14px 24px;font-weight:700;font-size:17px;line-height:1.2;text-decoration:none;border:0;cursor:pointer;text-align:center}
+  .btn-primary{background:var(--ink);color:var(--paper)}
+  .btn-ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 2px var(--ink)}
+  .fire{width:100%;min-height:56px;font-size:19px}
+  .fire:disabled{opacity:.38;cursor:not-allowed}
+  .hint{font-size:15px;color:var(--muted);margin:-2px 0 0;text-align:center}
+
+  .verdict{border-radius:20px;padding:18px 18px 20px;background:#DCEFE4;box-shadow:inset 0 0 0 2px var(--green)}
+  .verdict.miss{background:#FCE6DC;box-shadow:inset 0 0 0 2px var(--ink)}
+  .verdict h3{display:flex;align-items:center;gap:10px;font-size:26px;letter-spacing:-.02em}
+  .verdict h3 svg{flex:none}
+  .verdict p{margin:8px 0 0}
+  .verdict .why{color:#3E3A46;font-size:17px}
+  .verdict .why b{color:var(--ink)}
+  .verdict .btn{margin-top:16px;width:100%}
+
+  .end{padding:28px 0 56px;max-width:720px;margin:0 auto;outline:none}
+  .end h2{font-size:clamp(44px,11vw,72px)}
+  .end h2 span{color:var(--blue)}
+  .recap{list-style:none;margin:22px 0 0;padding:0}
+  .recap li{display:flex;gap:12px;align-items:flex-start;padding:13px 0;border-top:1px solid var(--line);font-size:18px}
+  .recap li:last-child{border-bottom:1px solid var(--line)}
+  .recap li svg{flex:none;margin-top:2px}
+  .cta{margin-top:28px;background:var(--blue);color:var(--paper);border-radius:28px;padding:28px 22px 26px}
+  .cta .mark{font:800 44px/1 'Fraunces',serif;letter-spacing:-.04em;display:block;margin-bottom:12px}
+  .cta p{font:700 clamp(21px,4.4vw,26px)/1.22 'Bricolage Grotesque',sans-serif;letter-spacing:-.015em;margin:0}
+  .cta p + p{margin-top:8px;font-weight:600;color:rgba(255,248,237,.88)}
+  .cta .btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+  .cta .btn-primary{background:var(--paper);color:var(--ink)}
+  .cta .btn-ghost{color:var(--paper);box-shadow:inset 0 0 0 2px var(--paper)}
+  .cta :focus-visible{outline-color:var(--saffron)}
+  .cta .note{font-size:15px;color:rgba(255,248,237,.86);margin:12px 0 0;font-family:'Source Sans 3';font-weight:400}
+  .cta .msg{font:600 15px/1.3 'Source Sans 3';margin:12px 0 0;color:var(--paper);min-height:1px}
+  .again{margin-top:22px;background:none;border:0;padding:6px 0;font-weight:700;font-size:17px;color:var(--blue);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+
+  footer{border-top:1px solid var(--line);padding:26px 0 36px;font-size:15px;color:var(--muted)}
+  footer .wrap{display:flex;justify-content:space-between;gap:10px 20px;flex-wrap:wrap}
+  footer a{color:var(--muted)}
+
+  @media (min-width:600px){ .wrap{padding:0 24px} .cta{padding:34px 34px 30px} }
+  @media (min-width:980px){
+    .intro{padding-top:40px}
+    .game{display:grid;grid-template-columns:minmax(0,400px) minmax(0,1fr);grid-template-rows:auto auto auto 1fr;column-gap:48px;row-gap:16px;align-items:start}
+    .game > .intro,.game > .bar,.game > .prompt,.game > .controls{grid-column:1}
+    .game > .view{grid-column:2;grid-row:1 / span 4;position:sticky;top:24px;margin-top:40px}
+  }
+  @media (prefers-reduced-motion:reduce){ .barrel{transition:none} }
+</style>
+</head>
+<body>
+
+<header class="top"><div class="wrap">
+  <a class="logo" href="../" aria-label="Axiom home">axiom</a>
+  <a class="home" href="../">What is Axiom?</a>
+</div></header>
+
+<main class="wrap">
+  <div class="game" id="game">
+    <section class="intro">
+      <p class="kicker">Free mini-lesson · no signup</p>
+      <h1>Predict where it lands.</h1>
+      <p class="lede">A launcher fires a ball at 30 m/s. Commit to a prediction, then fire and see if you were right. Five rounds.</p>
+    </section>
+
+    <div class="bar">
+      <span class="round" id="roundLabel">Round 1 of 5</span>
+      <ol class="dots" id="dots" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li></ol>
+      <span class="score" id="scoreLabel">Score 0</span>
+    </div>
+
+    <h2 class="prompt" id="prompt" tabindex="-1">Loading the launcher…</h2>
+
+    <div class="view">
+      <div class="stage" id="stage"><svg class="scene" id="scene" role="img" aria-label="Launcher and flag" xmlns="http://www.w3.org/2000/svg"></svg></div>
+      <p class="readout" id="readout">30 m/s</p>
+    </div>
+
+    <div class="controls">
+      <div id="predictPanel">
+        <p class="label" id="chipsLabel" style="margin-bottom:10px">Your angle</p>
+        <div class="chips" id="chips" role="group" aria-labelledby="chipsLabel"></div>
+        <button class="btn btn-primary fire" id="fire" type="button" disabled style="margin-top:14px">Fire</button>
+        <p class="hint" id="hint" style="margin-top:10px">Pick an angle first. No take-backs once you fire.</p>
+      </div>
+      <div class="verdict" id="verdict" hidden></div>
+    </div>
+    <noscript><p>This mini-game needs JavaScript. <a href="../">See what Axiom is</a> instead.</p></noscript>
+  </div>
+
+  <section class="end" id="end" hidden tabindex="-1" aria-labelledby="endTitle">
+    <p class="kicker">Your result</p>
+    <h2 id="endTitle">You got <span id="endScore">0/5</span>.</h2>
+    <ul class="recap" id="recap"></ul>
+    <div class="cta">
+      <span class="mark" aria-hidden="true">axiom</span>
+      <p>This was one page of an Axiom lesson.</p>
+      <p>Ask Axiom anything and get a lesson you can play with.</p>
+      <div class="btns">
+        <a class="btn btn-primary store" href="https://klustre21.github.io/axiom-app/#get">Get Axiom on the App Store</a>
+        <button class="btn btn-ghost" id="share" type="button">Share your score</button>
+      </div>
+      <p class="note store-note">Coming to the App Store 10 Nov.</p>
+      <p class="msg" id="shareMsg" role="status"></p>
+    </div>
+    <button class="again" id="again" type="button">Play again</button>
+  </section>
+
+  <div class="sr-only" id="live" aria-live="polite"></div>
+</main>
+
+<footer><div class="wrap">
+  <span>© 2026 AGL Labs LLC</span>
+  <span><a href="../">Axiom home</a> · <a href="https://axiom-backend-agl.fly.dev/api/legal/privacy">Privacy</a> · <a href="https://axiom-backend-agl.fly.dev/api/legal/terms">Terms</a></span>
+</div></footer>
+
+<script>
+(function () {
+  'use strict';
+
+  // Flip to true on launch day (Tue 10 Nov 2026), once the App Store page is live.
+  var STORE_LIVE = false;
+  var STORE_URL = 'https://apps.apple.com/app/id6795968100';
+  var SHARE_URL = 'https://klustre21.github.io/axiom-app/predict/';
+
+  // Physics: flat ground, no drag, launched from ground level.
+  var V = 30, G = 9.8, TOL = 2;            // m/s, m/s², "on target" half-width in m
+  var ANGLES = [15, 30, 45, 60, 75];
+  var X_MIN = -7, X_MAX = 101, Y_MAX = 46; // visible world, metres
+
+  function rad(d) { return d * Math.PI / 180; }
+  function range(a) { return V * V * Math.sin(rad(2 * a)) / G; }
+  function flight(a) { return 2 * V * Math.sin(rad(a)) / G; }
+  function m(x) { return x.toFixed(1); }
+  function sec(x) { return x.toFixed(2); }
+  function sinv(d) { return Math.sin(rad(d)).toFixed(2); }
+  function where(a, target) { var d = range(a) - target; return Math.abs(d) <= TOL ? 'on' : (d < 0 ? 'short' : 'long'); }
+  var CALL = { short: 'Short', on: 'On target', long: 'Long' };
+
+  var ROUNDS = [
+    { kind: 'pick', target: range(45), lesson: '45° goes farthest.',
+      prompt: function (r) { return 'The flag is ' + m(r.target) + ' m away. Which angle lands the ball on it?'; },
+      why: function () { return 'Range = v² sin(2θ) / g, and sin(2θ) is largest when 2θ = 90°, so 45° goes farthest (' + m(range(45)) + ' m) and every other angle falls short.'; } },
+    { kind: 'call', angle: 70, target: 75, lesson: 'Past 45°, a steeper launch lands shorter.',
+      prompt: function (r) { return 'Now a steep ' + r.angle + '° launch, same 30 m/s. The flag is ' + m(r.target) + ' m away. Where will the ball land?'; },
+      why: function (r) { return 'Past 45°, steeper means shorter: only ' + m(V * Math.cos(rad(r.angle))) + ' m/s of the 30 m/s points forward, so even ' + sec(flight(r.angle)) + ' s in the air carries it just ' + m(range(r.angle)) + ' m.'; } },
+    { kind: 'call', angle: 60, ghosts: [30], target: range(30), lesson: 'θ and 90° − θ land in the same place.',
+      prompt: function () { return 'The 30° shot (purple) landed on the flag. Now fire at 60°, twice as steep. Where will it land?'; },
+      why: function () { return 'sin(2θ) is symmetric about 45°, so θ and 90° − θ share a range: 30° and 60° both land at ' + m(range(30)) + ' m, the steep one after ' + sec(flight(60)) + ' s instead of ' + sec(flight(30)) + ' s.'; } },
+    { kind: 'pick', target: range(15), lesson: 'Two angles, one flag: 15° and 75°.',
+      prompt: function (r) { return 'New flag, ' + m(r.target) + ' m away. Pick an angle that lands on it.'; },
+      why: function () { return '15° + 75° = 90°, and sin(30°) = sin(150°) = ' + sinv(30) + ', so both angles land at ' + m(range(15)) + ' m.'; } },
+    { kind: 'call', angle: 20, ghosts: [40], target: range(40) / 2, lesson: 'Range follows sin(2θ), not θ.',
+      prompt: function (r) { return 'The 40° shot (purple) went ' + m(range(40)) + ' m. The flag is at half that. Fire at half the angle, 20°. Where will it land?'; },
+      why: function () { return 'Range follows sin(2θ), not θ: sin(40°) = ' + sinv(40) + ' is well over half of sin(80°) = ' + sinv(80) + ', so halving the angle keeps ' + Math.round(range(20) / range(40) * 100) + '% of the range.'; } }
+  ];
+  ROUNDS.forEach(function (r) {
+    r.answers = r.kind === 'pick'
+      ? ANGLES.filter(function (a) { return where(a, r.target) === 'on'; })
+      : [where(r.angle, r.target)];
+  });
+
+  var $ = function (id) { return document.getElementById(id); };
+  var game = $('game'), end = $('end'), stage = $('stage'), svg = $('scene'), readout = $('readout');
+  var chips = $('chips'), chipsLabel = $('chipsLabel'), fireBtn = $('fire'), hint = $('hint');
+  var predictPanel = $('predictPanel'), verdict = $('verdict'), live = $('live'), promptEl = $('prompt');
+  var mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+  function reduced() { return !!(mq && mq.matches); }
+
+  var state, geo, raf = 0;
+
+  function reset() {
+    state = { i: 0, score: 0, results: [], choice: null, phase: 'predict', angle: 35, p: 0, reveal: [] };
+  }
+
+  function currentAngle() {
+    var r = ROUNDS[state.i];
+    if (r.kind === 'call') return r.angle;
+    return state.choice == null ? 35 : state.choice;
+  }
+
+  function startRound(i) {
+    cancelAnimationFrame(raf);
+    var r = ROUNDS[i];
+    state.i = i; state.choice = null; state.phase = 'predict'; state.p = 0; state.reveal = [];
+    $('roundLabel').textContent = 'Round ' + (i + 1) + ' of ' + ROUNDS.length;
+    $('scoreLabel').textContent = 'Score ' + state.score;
+    var dots = $('dots').children;
+    for (var k = 0; k < dots.length; k++) {
+      var res = state.results[k];
+      dots[k].className = res ? (res.ok ? 'ok' : 'miss') : (k === i ? 'now' : '');
+    }
+    promptEl.textContent = r.prompt(r);
+    chipsLabel.textContent = r.kind === 'pick' ? 'Your angle' : 'Your call';
+    chips.innerHTML = '';
+    var opts = r.kind === 'pick'
+      ? ANGLES.map(function (a) { return { v: a, t: a + '°', l: a + ' degrees' }; })
+      : ['short', 'on', 'long'].map(function (c) { return { v: c, t: CALL[c] }; });
+    opts.forEach(function (o) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'chip' + (r.kind === 'pick' ? '' : ' word');
+      b.textContent = o.t;
+      if (o.l) b.setAttribute('aria-label', o.l);
+      b.setAttribute('aria-pressed', 'false');
+      b.addEventListener('click', function () { choose(o.v); });
+      chips.appendChild(b);
+    });
+    predictPanel.hidden = false;
+    verdict.hidden = true; verdict.innerHTML = '';
+    readout.textContent = r.kind === 'pick' ? '30 m/s · angle ?' : '30 m/s at ' + r.angle + '°';
+    syncFire();
+    drawScene();
+  }
+
+  function choose(v) {
+    if (state.phase !== 'predict') return;
+    state.choice = v;
+    var r = ROUNDS[state.i];
+    var list = chips.children;
+    for (var k = 0; k < list.length; k++) {
+      var opt = r.kind === 'pick' ? ANGLES[k] : ['short', 'on', 'long'][k];
+      list[k].setAttribute('aria-pressed', String(opt === v));
+    }
+    if (r.kind === 'pick') {
+      readout.textContent = '30 m/s at ' + v + '°';
+      var barrel = document.getElementById('barrel');
+      if (barrel && geo) barrel.style.transform = barrelTransform(v);
+    }
+    syncFire();
+  }
+
+  function syncFire() {
+    var r = ROUNDS[state.i];
+    var ready = state.choice != null && state.phase === 'predict';
+    fireBtn.disabled = !ready;
+    fireBtn.textContent = r.kind === 'pick' ? (state.choice == null ? 'Fire' : 'Fire at ' + state.choice + '°') : 'Fire at ' + r.angle + '°';
+    hint.textContent = ready
+      ? (r.kind === 'pick' ? 'Your pick: ' + state.choice + '°. ' : 'Your call: ' + CALL[state.choice] + '. ') + 'No take-backs once you fire.'
+      : (r.kind === 'pick' ? 'Pick an angle first.' : 'Make your call first.') + ' No take-backs once you fire.';
+  }
+
+  // ---------- drawing ----------
+  function point(a, t) {
+    var vx = V * Math.cos(rad(a)), vy = V * Math.sin(rad(a));
+    return [vx * t, Math.max(0, vy * t - 0.5 * G * t * t)];
+  }
+  function arcD(a, p) {
+    var T = flight(a), n = 90, d = '', tEnd = p * T;
+    for (var k = 0; k <= n; k++) {
+      var t = Math.min(tEnd, k / n * T);
+      var q = point(a, t);
+      d += (k ? 'L' : 'M') + geo.X(q[0]).toFixed(1) + ' ' + geo.Y(q[1]).toFixed(1);
+      if (t >= tEnd) break;
+    }
+    return d;
+  }
+  function barrelTransform(a) {
+    return 'translate(' + geo.X(0).toFixed(1) + 'px,' + geo.gy.toFixed(1) + 'px) rotate(' + (-a) + 'deg)';
+  }
+  function label(cx, cy, text, fill, left) {
+    var w = text.length * 7.3 + 16, h = 21;
+    var x = left != null ? left : cx - w / 2;
+    x = Math.max(4, Math.min(geo.W - w - 4, x));
+    return { x: x, y: cy - h / 2, w: w, h: h, text: text, fill: fill };
+  }
+  function overlaps(a, b) { return a.x < b.x + b.w + 4 && b.x < a.x + a.w + 4 && a.y < b.y + b.h + 3 && b.y < a.y + a.h + 3; }
+  function pillSvg(l) {
+    return '<rect x="' + l.x.toFixed(1) + '" y="' + l.y.toFixed(1) + '" width="' + l.w.toFixed(1) + '" height="' + l.h + '" rx="10.5" fill="' + l.fill + '" stroke="#302D38" stroke-width="1.5"/>' +
+      '<text class="pill-t" x="' + (l.x + l.w / 2).toFixed(1) + '" y="' + (l.y + l.h / 2 + 4.2).toFixed(1) + '" text-anchor="middle">' + l.text + '</text>';
+  }
+  function ghostSvg(a) {
+    return '<path class="ghost" d="' + arcD(a, 1) + '"/>' +
+      '<circle cx="' + geo.X(range(a)).toFixed(1) + '" cy="' + geo.gy.toFixed(1) + '" r="4" fill="#8C78C9"/>';
+  }
+  function ghostLabel(a) {
+    var apexX = range(a) / 2, apexY = Math.pow(V * Math.sin(rad(a)), 2) / (2 * G);
+    var cy = geo.Y(apexY) - 15;
+    if (cy < 16) return label(geo.X(apexX) + 32, geo.Y(apexY) + 2, a + '°', '#D6C8F0');
+    return label(geo.X(apexX), cy, a + '°', '#D6C8F0');
+  }
+
+  function drawScene() {
+    var r = ROUNDS[state.i];
+    var W = stage.clientWidth;
+    if (!W) return;
+    var padL = 10, padR = 10, top = 14, foot = 30;
+    var s = (W - padL - padR) / (X_MAX - X_MIN);
+    var gy = top + Y_MAX * s, H = Math.round(gy + foot);
+    geo = { W: W, H: H, s: s, gy: gy,
+      X: function (x) { return padL + (x - X_MIN) * s; },
+      Y: function (y) { return gy - y * s; } };
+    var X = geo.X, Y = geo.Y, o = [];
+    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    o.push('<rect width="' + W + '" height="' + H + '" fill="#EEF0FB"/>');
+    [20, 40].forEach(function (h) {
+      var y = Y(h).toFixed(1);
+      o.push('<line class="grid" x1="0" x2="' + W + '" y1="' + y + '" y2="' + y + '"/>');
+      o.push('<text class="ax" x="6" y="' + (Y(h) - 5).toFixed(1) + '">' + h + ' m</text>');
+    });
+    o.push('<rect x="0" y="' + gy.toFixed(1) + '" width="' + W + '" height="' + (H - gy).toFixed(1) + '" fill="#EFE3D3"/>');
+    var landX = state.phase === 'landed' ? X(range(state.angle)) : -99;
+    [20, 40, 60, 80].forEach(function (d) {
+      var x = X(d).toFixed(1);
+      if (Math.abs(X(d) - landX) < 16) return;
+      o.push('<line x1="' + x + '" x2="' + x + '" y1="' + gy.toFixed(1) + '" y2="' + (gy + 5).toFixed(1) + '" stroke="#302D38" stroke-width="1.5"/>');
+      o.push('<text class="ax" x="' + x + '" y="' + (gy + 19).toFixed(1) + '" text-anchor="middle">' + d + (d === 80 ? ' m' : '') + '</text>');
+    });
+    o.push('<line x1="0" x2="' + W + '" y1="' + gy.toFixed(1) + '" y2="' + gy.toFixed(1) + '" stroke="#302D38" stroke-width="2.5"/>');
+
+    // target zone and flag
+    var fx = X(r.target), pole = Math.max(30, Math.min(44, 5.6 * s));
+    o.push('<rect x="' + X(r.target - TOL).toFixed(1) + '" y="' + (gy - 4).toFixed(1) + '" width="' + (2 * TOL * s).toFixed(1) + '" height="8" rx="3" fill="#F4D66A" stroke="#302D38" stroke-width="1.5"/>');
+    o.push('<line x1="' + fx.toFixed(1) + '" x2="' + fx.toFixed(1) + '" y1="' + (gy - 4).toFixed(1) + '" y2="' + (gy - pole).toFixed(1) + '" stroke="#302D38" stroke-width="2.5" stroke-linecap="round"/>');
+    o.push('<path d="M' + fx.toFixed(1) + ' ' + (gy - pole).toFixed(1) + 'l17 6.5l-17 6.5z" fill="#F4AC8C" stroke="#302D38" stroke-width="1.5" stroke-linejoin="round"/>');
+
+    // ghosts: given shots, then revealed answers
+    var ghosts = (r.ghosts || []).concat(state.reveal);
+    ghosts.forEach(function (a) { o.push(ghostSvg(a)); });
+
+    // labels: flag first, then ghost angles nudged clear of anything already placed
+    var labels = [label(0, gy - pole - 16, 'flag ' + m(r.target) + ' m', '#F4D66A', fx - 10)];
+    ghosts.forEach(function (a) {
+      var g = ghostLabel(a);
+      for (var tries = 0; tries < 6; tries++) {
+        var hit = null;
+        labels.forEach(function (p) { if (!hit && overlaps(g, p)) hit = p; });
+        if (!hit) break;
+        g.y = hit.y - g.h - 5;
+        if (g.y < 4) g.y = hit.y + hit.h + 5;
+      }
+      labels.push(g);
+    });
+
+    // current shot
+    o.push('<path class="trail" id="trail" d=""/>');
+    var L = Math.max(28, Math.min(46, 6.2 * s)), bw = L * 0.36;
+    o.push('<g id="barrel" class="barrel" style="transform:' + barrelTransform(currentAngle()) + '">' +
+      '<rect x="-2" y="' + (-bw / 2).toFixed(1) + '" width="' + (L + 2).toFixed(1) + '" height="' + bw.toFixed(1) + '" rx="' + (bw / 2).toFixed(1) + '" fill="#334BDC" stroke="#302D38" stroke-width="2"/></g>');
+    var px = X(0), dome = Math.max(11, Math.min(16, 2.3 * s));
+    o.push('<path d="M' + (px - dome).toFixed(1) + ' ' + gy.toFixed(1) + 'A' + dome + ' ' + dome + ' 0 0 1 ' + (px + dome).toFixed(1) + ' ' + gy.toFixed(1) + 'Z" fill="#302D38"/>');
+    if (state.phase === 'landed') {
+      var ok = state.results[state.i] && state.results[state.i].hit;
+      o.push('<circle cx="' + X(range(state.angle)).toFixed(1) + '" cy="' + gy.toFixed(1) + '" r="10" fill="none" stroke="' + (ok ? '#12815A' : '#302D38') + '" stroke-width="3"/>');
+    }
+    labels.forEach(function (l) { o.push(pillSvg(l)); });
+    var br = Math.max(5.5, Math.min(8, 1.25 * s));
+    o.push('<circle id="ball" r="' + br.toFixed(1) + '" cx="-20" cy="-20" fill="#334BDC" stroke="#302D38" stroke-width="2" visibility="hidden"/>');
+
+    svg.innerHTML = o.join('');
+    svg.setAttribute('aria-label', 'Launcher at 0 m, flag at ' + m(r.target) + ' m' +
+      (state.phase === 'landed' ? '. The ball landed at ' + m(range(state.angle)) + ' m.' : '.'));
+    if (state.phase !== 'predict') drawShot();
+  }
+
+  function drawShot() {
+    var a = state.angle, T = flight(a), t = state.p * T, q = point(a, t);
+    document.getElementById('trail').setAttribute('d', arcD(a, state.p));
+    var ball = document.getElementById('ball');
+    ball.setAttribute('cx', geo.X(q[0]).toFixed(1));
+    ball.setAttribute('cy', geo.Y(q[1]).toFixed(1));
+    ball.setAttribute('visibility', 'visible');
+    if (state.phase === 'flying') {
+      readout.textContent = 't ' + sec(t) + ' s · x ' + m(q[0]) + ' m · y ' + m(q[1]) + ' m';
+    }
+  }
+
+  // ---------- firing ----------
+  function fire() {
+    if (state.phase !== 'predict' || state.choice == null) return;
+    var r = ROUNDS[state.i];
+    state.angle = r.kind === 'pick' ? state.choice : r.angle;
+    state.phase = 'flying';
+    var list = chips.children;
+    for (var k = 0; k < list.length; k++) list[k].disabled = true;
+    fireBtn.disabled = true;
+    fireBtn.textContent = 'In flight…';
+    var T = flight(state.angle);
+    if (reduced()) { state.p = 1; drawShot(); land(); return; }
+    var dur = (1.4 + 0.27 * T) * 1000, t0 = null;
+    function step(now) {
+      if (t0 === null) t0 = now;
+      state.p = Math.min(1, (now - t0) / dur);
+      drawShot();
+      if (state.p < 1) raf = requestAnimationFrame(step); else land();
+    }
+    raf = requestAnimationFrame(step);
+  }
+
+  function land() {
+    var r = ROUNDS[state.i], a = state.angle, R = range(a), d = R - r.target, w = where(a, r.target);
+    var hit = w === 'on';
+    var ok = r.kind === 'pick' ? hit : state.choice === w;
+    state.phase = 'landed';
+    state.results[state.i] = { ok: ok, hit: hit };
+    if (ok) state.score++;
+    if (r.kind === 'pick') state.reveal = r.answers.filter(function (x) { return x !== a; });
+    drawScene();
+    readout.textContent = 'range ' + m(R) + ' m · flight ' + sec(flight(a)) + ' s';
+    $('scoreLabel').textContent = 'Score ' + state.score;
+    var dot = $('dots').children[state.i];
+    dot.className = ok ? 'ok' : 'miss';
+
+    var place = hit ? 'right on the flag' : m(Math.abs(d)) + ' m ' + (d < 0 ? 'short of' : 'past') + ' the flag';
+    var line;
+    if (r.kind === 'pick') {
+      if (ok) {
+        line = a + '° lands at ' + m(R) + ' m, right on the flag' +
+          (r.answers.length > 1 ? '. So does ' + r.answers.filter(function (x) { return x !== a; }).join('° and ') + '°.' : '.');
+      } else {
+        line = a + '° lands at ' + m(R) + ' m, ' + place + '. ' +
+          (r.answers.length > 1 ? r.answers.join('° and ') + '° both land on it.' : r.answers[0] + '° lands on it.');
+      }
+    } else {
+      line = 'You said ' + CALL[state.choice].toLowerCase() + '. It landed at ' + m(R) + ' m, ' + place + '.';
+    }
+    var last = state.i === ROUNDS.length - 1;
+    var icon = ok
+      ? '<svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="14" fill="#12815A"/><path d="M8.5 15.5l4.2 4.2 8.8-9.4" fill="none" stroke="#FFF8ED" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+      : '<svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="13.5" fill="#F4AC8C" stroke="#302D38" stroke-width="2"/><path d="M10.5 10.5l9 9M19.5 10.5l-9 9" stroke="#302D38" stroke-width="2.6" stroke-linecap="round"/></svg>';
+    verdict.className = 'verdict' + (ok ? '' : ' miss');
+    verdict.innerHTML = '<h3>' + icon + (ok ? 'Correct.' : 'Not quite.') + '</h3>' +
+      '<p></p><p class="why"><b>Why:</b> <span></span></p>' +
+      '<button class="btn btn-primary" type="button" id="next">' + (last ? 'See your score' : 'Next round') + '</button>';
+    verdict.querySelector('p').textContent = line;
+    verdict.querySelector('.why span').textContent = r.why(r);
+    predictPanel.hidden = true;
+    verdict.hidden = false;
+    live.textContent = (ok ? 'Correct. ' : 'Not quite. ') + line + ' ' + r.why(r);
+    var next = $('next');
+    next.addEventListener('click', function () {
+      if (last) finish(); else { startRound(state.i + 1); promptEl.focus({ preventScroll: true }); }
+    });
+    next.focus({ preventScroll: true });
+    var rect = verdict.getBoundingClientRect();
+    if (rect.bottom > window.innerHeight) verdict.scrollIntoView({ block: 'nearest', behavior: reduced() ? 'auto' : 'smooth' });
+  }
+
+  // ---------- end card ----------
+  var CHECK = '<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#12815A"/><path d="M6.5 12.5l3.6 3.6 7.4-8" fill="none" stroke="#FFF8ED" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var CROSS = '<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.5" fill="#F4AC8C" stroke="#302D38" stroke-width="1.8"/><path d="M8.3 8.3l7.4 7.4M15.7 8.3l-7.4 7.4" stroke="#302D38" stroke-width="2.2" stroke-linecap="round"/></svg>';
+
+  function finish() {
+    $('endScore').textContent = state.score + '/' + ROUNDS.length;
+    var recap = $('recap');
+    recap.innerHTML = '';
+    ROUNDS.forEach(function (r, k) {
+      var ok = state.results[k] && state.results[k].ok;
+      var li = document.createElement('li');
+      li.innerHTML = (ok ? CHECK : CROSS) + '<span></span>';
+      li.querySelector('span').textContent = r.lesson;
+      var sr = document.createElement('span');
+      sr.className = 'sr-only';
+      sr.textContent = ok ? ' (you got this one)' : ' (missed)';
+      li.appendChild(sr);
+      recap.appendChild(li);
+    });
+    $('shareMsg').textContent = '';
+    game.hidden = true;
+    end.hidden = false;
+    window.scrollTo(0, 0);
+    end.focus({ preventScroll: true });
+  }
+
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text).then(function () { return true; }, function () { return legacyCopy(text); });
+    }
+    return Promise.resolve(legacyCopy(text));
+  }
+  function legacyCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+
+  $('share').addEventListener('click', function () {
+    var text = 'I scored ' + state.score + '/' + ROUNDS.length + ' predicting where it lands. Can you beat it?';
+    var msg = $('shareMsg');
+    msg.textContent = '';
+    function fallback() {
+      copyText(text + ' ' + SHARE_URL).then(function (ok) {
+        msg.textContent = ok ? 'Link copied. Paste it anywhere.' : 'Copy this link: ' + SHARE_URL;
+      });
+    }
+    if (navigator.share) {
+      navigator.share({ title: 'Predict where it lands', text: text, url: SHARE_URL }).catch(function (e) {
+        if (!e || e.name !== 'AbortError') fallback();
+      });
+    } else fallback();
+  });
+
+  $('again').addEventListener('click', function () {
+    reset();
+    end.hidden = true;
+    game.hidden = false;
+    startRound(0);
+    promptEl.scrollIntoView({ block: 'start', behavior: 'auto' });
+    promptEl.focus({ preventScroll: true });
+  });
+
+  fireBtn.addEventListener('click', fire);
+
+  var pending = 0;
+  window.addEventListener('resize', function () {
+    if (pending) return;
+    pending = requestAnimationFrame(function () {
+      pending = 0;
+      if (!game.hidden && geo && stage.clientWidth !== geo.W) drawScene();
+    });
+  });
+
+  if (STORE_LIVE) {
+    Array.prototype.forEach.call(document.querySelectorAll('.store'), function (a) { a.href = STORE_URL; });
+    Array.prototype.forEach.call(document.querySelectorAll('.store-note'), function (n) { n.hidden = true; });
+  }
+
+  reset();
+  startRound(0);
+})();
+</script>
+</body>
+</html>

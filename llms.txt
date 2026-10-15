@@ -13,8 +13,8 @@
 - It is for understanding, not for copying homework answers. There is no photo solver.
 
 ## Pricing (US)
-- 3-day free trial with 3 custom lessons and every Original.
-- Starter $9.99/month (10 custom lessons), Plus $19.99/month (25), Pro $39.99/month (55). Credit packs of 3, 8 or 20 lessons.
+- 7-day free trial with 3 custom lessons and every Original.
+- Starter $9.99/month or $69.99/year (10 custom lessons a month), Plus $19.99/month or $139.99/year (25), Pro $39.99/month (55). Yearly plans still refill every month. Credit packs of 3, 8 or 20 lessons.
 
 ## Positioning
 - One line: "Ask anything. Get a lesson you can play with."
@@ -29,5 +29,6 @@
 ## Links
 - Website: https://klustre21.github.io/axiom-app/
 - Press & creator kit (facts, footage, brand): https://klustre21.github.io/axiom-app/press.html
+- Free browser mini-lesson, no signup ("Predict where it lands"): https://klustre21.github.io/axiom-app/predict/
 - Privacy: https://axiom-backend-agl.fly.dev/api/legal/privacy
 - Contact: contact@agl-labs.com

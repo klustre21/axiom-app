@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A friend invited you to Axiom</title>
+<meta name="description" content="A friend invited you to Axiom, the iPhone app that turns any math, physics or programming question into an interactive lesson. Start a plan or free trial, finish your first lesson, and you both get 2 extra lesson credits.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#FFF8ED">
+<meta property="og:type" content="website">
+<meta property="og:title" content="A friend invited you to Axiom">
+<meta property="og:description" content="Any question becomes an interactive lesson you can touch, drag and run. Start a plan or free trial, finish your first lesson, and you both get 2 extra lesson credits.">
+<meta property="og:url" content="https://klustre21.github.io/axiom-app/invite.html">
+<meta property="og:image" content="https://klustre21.github.io/axiom-app/img/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="A friend invited you to Axiom">
+<meta name="twitter:description" content="Any question becomes an interactive lesson you can touch, drag and run. Start a plan or free trial, finish your first lesson, and you both get 2 extra lesson credits.">
+<meta name="twitter:image" content="https://klustre21.github.io/axiom-app/img/og.jpg">
+<link rel="icon" href="img/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Fraunces:opsz,wght@9..144,800&family=IBM+Plex+Mono:wght@500;600&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#FFF8ED;--paper2:#F6EEE2;--ink:#302D38;--muted:#6A6472;--blue:#334BDC;--coral:#F4AC8C;--saffron:#F4D66A;--lilac:#D6C8F0;--green:#12815A;--line:rgba(48,45,56,.14);--mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;color-scheme:light}
+  *{box-sizing:border-box}
+  [hidden]{display:none!important}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font:400 18px/1.55 'Source Sans 3',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:var(--blue)}
+  button{font:inherit;color:inherit}
+  :focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 16px}
+  h1,h2,h3{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;letter-spacing:-.03em;line-height:1.04;margin:0}
+  .accent{color:var(--blue)}
+
+  .top{border-bottom:1px solid var(--line)}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+  .logo{font:800 30px/1 'Fraunces',serif;color:var(--blue);letter-spacing:-.04em;text-decoration:none}
+  .top .home{font-weight:600;font-size:16px;color:var(--ink);text-decoration:none}
+  .top .home:hover{text-decoration:underline}
+
+  main.wrap{padding-top:30px;padding-bottom:56px}
+  .col{max-width:640px}
+  .kicker{font:600 13px/1.2 'Source Sans 3';letter-spacing:.14em;text-transform:uppercase;color:var(--blue);margin:0 0 12px}
+  h1{font-size:clamp(38px,9vw,64px)}
+  .lede{font-size:clamp(18px,2.2vw,21px);color:#4A4552;margin:14px 0 0;max-width:32em}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border-radius:999px;padding:14px 24px;font-weight:700;font-size:17px;line-height:1.2;text-decoration:none;border:0;cursor:pointer;text-align:center}
+  .btn-primary{background:var(--ink);color:var(--paper)}
+  .btn-ghost{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 2px var(--ink)}
+  .note{font-size:15px;color:var(--muted);margin:10px 0 0}
+
+  /* the ticket */
+  .ticket{position:relative;margin-top:30px;background:var(--lilac);border-radius:26px;box-shadow:inset 0 0 0 2px var(--ink);overflow:hidden}
+  .ticket .half{padding:22px 22px 24px}
+  .ticket .half + .half{border-top:2px dashed rgba(48,45,56,.55);background:var(--saffron);padding-bottom:14px}
+  .notch{position:absolute;width:30px;height:30px;border-radius:50%;background:var(--paper);box-shadow:inset 0 0 0 2px var(--ink);top:var(--cut);transform:translateY(-50%)}
+  .notch.l{left:-15px} .notch.r{right:-15px}
+  .bonus{display:flex;gap:12px;flex-wrap:wrap}
+  .bonus div{flex:1 1 140px;display:flex;align-items:center;gap:12px;background:#fff;border-radius:18px;box-shadow:inset 0 0 0 2px var(--ink);padding:12px 14px}
+  .bonus b{font:800 38px/1 'Bricolage Grotesque',sans-serif;letter-spacing:-.03em;color:var(--blue)}
+  .bonus span{font-weight:700;font-size:16px;line-height:1.2}
+  .gift-line{margin:14px 0 0;font-size:17px;color:#3E3A46}
+  .label{font:700 13px/1 'Source Sans 3';letter-spacing:.12em;text-transform:uppercase;color:#4A4552;margin:0 0 12px}
+  .code-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .code{font:600 clamp(24px,7vw,34px)/1 var(--mono);letter-spacing:.14em;padding:13px 14px 13px 20px;border-radius:999px;background:#fff;box-shadow:inset 0 0 0 2px var(--ink);-webkit-user-select:all;user-select:all;white-space:nowrap}
+  .copy{min-width:96px;padding:13px 20px}
+  .copy-msg{font-size:15px;font-weight:600;margin:10px 0 0;min-height:1.3em}
+
+  h2{font-size:clamp(28px,5vw,38px);margin-top:44px}
+  .steps{list-style:none;padding:0;margin:18px 0 0}
+  .steps li{display:flex;gap:16px;padding:20px 0;border-top:1px solid var(--line)}
+  .steps li:last-child{border-bottom:1px solid var(--line)}
+  .steps .n{flex:none;font:800 16px/1 'Bricolage Grotesque';width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--ink);color:var(--paper)}
+  .steps h3{font-size:22px;letter-spacing:-.02em;line-height:1.2;margin-top:6px}
+  .steps p{margin:8px 0 0;color:#3E3A46}
+  .steps .btn{margin-top:14px}
+  .path{font-weight:700;color:var(--ink);white-space:nowrap}
+  .open{margin:26px 0 0;font-weight:700;font-size:18px}
+  .fine{margin:26px 0 0;font-size:14px;color:var(--muted);overflow-wrap:anywhere}
+  .fine a{color:var(--muted)}
+
+  .notice{margin:18px 0 0;padding:14px 16px;border-radius:16px;background:#FCE6DC;box-shadow:inset 0 0 0 2px var(--ink);font-size:17px}
+  .generic .btn{margin-top:28px}
+  .generic .more{margin:30px 0 0;padding-top:20px;border-top:1px solid var(--line)}
+  .generic .more p{margin:0 0 8px}
+  .shot{display:none}
+  @media (min-width:1000px){
+    .generic.col{max-width:none;display:grid;grid-template-columns:minmax(0,640px) minmax(0,360px);gap:72px;align-items:center;justify-content:space-between}
+    .shot{display:block;margin:0;border-radius:30px;overflow:hidden;box-shadow:0 0 0 2px var(--ink);background:#fff}
+    .shot img{display:block;width:100%;height:auto}
+  }
+
+  footer{border-top:1px solid var(--line);padding:26px 0 36px;font-size:15px;color:var(--muted)}
+  footer .wrap{display:flex;justify-content:space-between;gap:10px 20px;flex-wrap:wrap}
+  footer a{color:var(--muted)}
+
+  @media (min-width:600px){ .wrap{padding:0 24px} .ticket .half{padding:26px 30px 28px} .ticket .half + .half{padding-bottom:16px} main.wrap{padding-top:52px} }
+  @media (min-width:1000px){
+    .layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,480px);gap:64px;align-items:start}
+    .layout .ticket{margin-top:6px}
+    .layout h2{margin-top:0}
+  }
+</style>
+</head>
+<body>
+
+<header class="top"><div class="wrap">
+  <a class="logo" href="./" aria-label="Axiom home">axiom</a>
+  <a class="home" href="./">What is Axiom?</a>
+</div></header>
+
+<main class="wrap">
+
+  <!-- Shown when the link carries a valid ?code= -->
+  <div class="invite" id="invite" hidden>
+    <div class="layout">
+      <div>
+        <p class="kicker">You're invited</p>
+        <h1>A friend invited you to <span class="accent">Axiom</span></h1>
+        <p class="lede">Axiom turns any math, physics or programming question into an interactive lesson you learn by doing: predict it, then run it.</p>
+
+        <div class="ticket" style="--cut:0px" id="ticket">
+          <span class="notch l" aria-hidden="true"></span><span class="notch r" aria-hidden="true"></span>
+          <div class="half" id="giftHalf">
+            <p class="label">What you get</p>
+            <div class="bonus">
+              <div><b>+2</b><span>credits for you</span></div>
+              <div><b>+2</b><span>credits for your friend</span></div>
+            </div>
+            <p class="gift-line">2 extra lesson credits for you, and 2 for your friend, once you finish your first lesson on a plan or free trial.</p>
+          </div>
+          <div class="half">
+            <p class="label" id="codeLabel">Your invite code</p>
+            <div class="code-row">
+              <span class="code" id="code" aria-labelledby="codeLabel code">--------</span>
+              <button class="btn btn-primary copy" id="copy" type="button" aria-describedby="codeLabel">Copy</button>
+            </div>
+            <p class="copy-msg" id="copyMsg" role="status"></p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h2>How to claim it</h2>
+        <ol class="steps">
+          <li><span class="n" aria-hidden="true">1</span><div>
+            <h3>Get Axiom on the App Store</h3>
+            <a class="btn btn-primary store" href="https://klustre21.github.io/axiom-app/#get">Get Axiom on the App Store</a>
+            <p class="note store-note">Coming to the App Store 10 Nov.</p>
+          </div></li>
+          <li><span class="n" aria-hidden="true">2</span><div>
+            <h3>Enter the code</h3>
+            <p>Open the invite link again once Axiom is installed, or sign in and enter the code at <span class="path">Settings › Invite friends</span>. Codes work in your first week.</p>
+          </div></li>
+          <li><span class="n" aria-hidden="true">3</span><div>
+            <h3>Start your trial and finish a lesson</h3>
+            <p>On a plan or a free trial, that's when the credits land: 2 for you and 2 for your friend.</p>
+          </div></li>
+        </ol>
+        <p class="open"><a id="openApp" href="axiom://invite">Already have Axiom? Open the invite</a></p>
+        <p class="fine">Credits have no cash value. One invite code per person. Terms: <a href="https://axiom-backend-agl.fly.dev/api/legal/terms">https://axiom-backend-agl.fly.dev/api/legal/terms</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shown when there is no code, or it isn't valid -->
+  <div class="generic col" id="generic">
+   <div>
+    <p class="kicker">Axiom for iPhone</p>
+    <h1>Get <span class="accent">Axiom</span></h1>
+    <p class="notice" id="badCode" hidden>This invite link looks incomplete. Ask your friend to send it again, or type their code into the app at <span class="path">Settings › Invite friends</span>.</p>
+    <p class="lede">Ask any math, physics or programming question and get an interactive lesson you learn by doing: predict it, then run it and see whether you were right.</p>
+    <a class="btn btn-primary store" href="https://klustre21.github.io/axiom-app/#get">Get Axiom on the App Store</a>
+    <p class="note store-note">Coming to the App Store 10 Nov.</p>
+    <div class="more">
+      <p>Have an invite code from a friend? Enter it in the app at <span class="path">Settings › Invite friends</span>.</p>
+      <p><a href="./">See how Axiom works</a> · <a href="predict/">Try a free mini-lesson</a></p>
+    </div>
+   </div>
+    <figure class="shot"><img src="media/launch-the-shell.jpg" width="700" height="976" alt="An Axiom lesson page: pick a launch angle, fire, and see two angles land on the same marker" loading="lazy"></figure>
+  </div>
+
+</main>
+
+<footer><div class="wrap">
+  <span>© 2026 AGL Labs LLC</span>
+  <span><a href="./">Axiom home</a> · <a href="https://axiom-backend-agl.fly.dev/api/legal/privacy">Privacy</a> · <a href="https://axiom-backend-agl.fly.dev/api/legal/terms">Terms</a></span>
+</div></footer>
+
+<script>
+(function () {
+  'use strict';
+
+  // Flip to true on launch day (Tue 10 Nov 2026), once the App Store page is live.
+  var STORE_LIVE = false;
+  var STORE_URL = 'https://apps.apple.com/app/id6795968100';
+
+  if (STORE_LIVE) {
+    Array.prototype.forEach.call(document.querySelectorAll('.store'), function (a) { a.href = STORE_URL; });
+    Array.prototype.forEach.call(document.querySelectorAll('.store-note'), function (n) { n.hidden = true; });
+  }
+
+  var raw = '';
+  try { raw = new URLSearchParams(location.search).get('code') || ''; } catch (e) { raw = ''; }
+  var code = raw.trim().toUpperCase();
+  var valid = /^[A-HJ-NP-Z2-9]{8}$/.test(code);
+
+  if (!valid) {
+    document.title = 'Get Axiom';
+    if (raw.trim()) document.getElementById('badCode').hidden = false;
+    return;
+  }
+
+  document.getElementById('generic').hidden = true;
+  document.getElementById('invite').hidden = false;
+  document.getElementById('code').textContent = code;
+  document.getElementById('openApp').href = 'axiom://invite?code=' + encodeURIComponent(code);
+
+  // Ticket notches sit on the dashed line between the two halves.
+  var ticket = document.getElementById('ticket'), giftHalf = document.getElementById('giftHalf');
+  function placeNotches() { ticket.style.setProperty('--cut', giftHalf.offsetHeight + 'px'); }
+  placeNotches();
+  window.addEventListener('resize', placeNotches);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(placeNotches);
+
+  var btn = document.getElementById('copy'), msg = document.getElementById('copyMsg'), timer = 0;
+  function legacyCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+  function done(ok) {
+    clearTimeout(timer);
+    if (ok) {
+      btn.textContent = 'Copied';
+      msg.textContent = 'Code copied. Paste it into Axiom.';
+      timer = setTimeout(function () { btn.textContent = 'Copy'; }, 2200);
+    } else {
+      var r = document.createRange();
+      r.selectNodeContents(document.getElementById('code'));
+      var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+      msg.textContent = 'Couldn’t copy automatically. The code is selected: copy it from there.';
+    }
+  }
+  btn.addEventListener('click', function () {
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(code).then(function () { done(true); }, function () { done(legacyCopy(code)); });
+    } else done(legacyCopy(code));
+  });
+})();
+</script>
+</body>
+</html>
